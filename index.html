@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html>
 
@@ -6,47 +7,72 @@
     <meta http-equiv="X-UA-Compatible" content="chrome=1" />
     <meta name="description" content="Loan Amortization Plugin (JQuery) : A JQuery Plugin for Loan Amortization" />
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
+    <link rel="stylesheet" type="text/css" media="screen" href="css/stylesheet.css">
+   <link type="text/css" rel="stylesheet" href="./css/amort.css"/>
+    <script type="text/javascript" src="./js/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="./js/moment.min.js"></script>
+    <script type="text/javascript" src="./js/amortisation.js"></script>
+	
     <title>Loan Amortization Plugin (JQuery)</title>
   </head>
+<body>
+<!-- HEADER -->
+<div id="header_wrap" class="outer">
+    <header class="inner">
+        <a id="forkme_banner" href="https://github.com/suryapratap/LoanAmortizationPlugin">View on GitHub</a>
+        <h1 id="project_title">Loan Amortization Plugin (JQuery)</h1>
+        <h2 id="project_tagline">A JQuery Plugin for Loan Amortization</h2>
 
-  <body>
+        <section id="downloads">
+            <a class="zip_download_link" href="https://github.com/suryapratap/LoanAmortizationPlugin/zipball/master">Download this project as a .zip file</a>
+            <a class="tar_download_link" href="https://github.com/suryapratap/LoanAmortizationPlugin/tarball/master">Download this project as a tar.gz file</a>
+        </section>
+    </header>
+</div>
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/suryapratap/LoanAmortizationPlugin">View on GitHub</a>
-
-          <h1 id="project_title">Loan Amortization Plugin (JQuery)</h1>
-          <h2 id="project_tagline">A JQuery Plugin for Loan Amortization</h2>
-
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/suryapratap/LoanAmortizationPlugin/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/suryapratap/LoanAmortizationPlugin/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
+<div>
+    <table id="amort" class="amTable">
+        <tr>
+            <td>Loan Amount</td>
+            <td><input type="text" id="amLoanAmount" value="100000"></td>
+            <td>&nbsp;</td>
+            <td>Loan Tenure</td>
+            <td><input type="text" id="amLoanTenure" value="24"></td>
+        </tr>
+        <tr>
+            <td>Rate of Interest</td>
+            <td><input type="text" id="amLoanRate" value="9.75"></td>
+            <td>&nbsp;</td>
+            <td>Extra Pmt</td>
+            <td><input type="text" id="amLoanPartial" value="0"></td>
+        </tr>
+    </table>
+    <div id="amSchedule" style="width: 100%;">
     </div>
+</div>
+<script type="text/javascript">
+    function showValues() {
+        var amt = $("#amLoanAmount").val();
+        var rate = $("#amLoanRate").val();
+        var tenure = $("#amLoanTenure").val();
+        var ext = $("#amLoanPartial").val();
 
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
-        <h3>
-<a name="about" class="anchor" href="#about"><span class="octicon octicon-link"></span></a>About</h3>
+        if (!(isNaN(amt) || isNaN(rate) || isNaN(tenure) || isNaN(ext))) {
+            $('#amSchedule').amortize({
+                amount: amt,
+                rate: rate,
+                tenure: tenure,
+                extras: ext
+            });
+        }
+    }
 
-<p>This plugin was created as a learning experience to make JQuery plugins</p>
-      </section>
-    </div>
-
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Loan Amortization Plugin (JQuery) maintained by <a href="https://github.com/suryapratap">suryapratap</a></p>
-        <p>Published with <a href="http://pages.github.com">GitHub Pages</a></p>
-      </footer>
-    </div>
-
-    
-
-  </body>
+    $(function () {
+        showValues();
+        $('#amort').change(function () {
+            showValues();
+        });
+    })
+</script>
+</body>
 </html>
