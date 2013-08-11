@@ -16,35 +16,37 @@
             return P * r * c / (c - 1)
         }
 
+        function round2(num) {
+            return Math.round(num * 100) / 100;
+        }
+
+        var content = '<table class="amTable"><caption>Amortization Table</caption><thead><th>Pmt.No.</th><th>Start Bal</th><th>Sch. Pmt</th><th>Ext. Pmt.</th><th>Tot. Pmt.</th><th>Principal</th><th>Int</th><th>End. Bal.</th><th>Cum. Int.</th></thead><tbody>';
+
         var emi = getEmi(o.amount, o.rate, o.tenure);
+
         var ext = o.extras * 1;
-        var tp = ext + emi;
         var rloc = o.rate / 1200;
         var bal = o.amount * 1;
-        var content = '<table class="amTable"><thead><th>Pmt.No.</th><th>Start Bal</th><th>Sch. Pmt</th><th>Ext. Pmt.</th><th>Tot. Pmt.</th><th>Principal</th><th>Int</th><th>End. Bal.</th><th>Cum. Int.</th></thead><tbody>';
         var pno = 1;
-        var demi = Math.round(emi * 100) / 100;
-        var dtot = Math.round(tp * 100) / 100;
-        var dext = Math.round(ext * 100) / 100;
+
         var cui = 0;
-        while (Math.round(bal) > 0) {
+        while (bal > 0) {
             var int = bal * rloc;
-            int = int < 1 ? 0 : int;
             var due = bal + int;
+            var tp = emi + ext;
+
             if (due <= tp) {
                 if (due <= emi) {
                     emi = due;
                     ext = 0;
-                    demi = Math.round(emi * 100) / 100;
-                    dext = 0;
                 } else {
-                    ext = tp - emi - due;
-                    dext = Math.round(ext * 100) / 100;
-                    dtot = Math.round((emi + ext) * 100) / 100;
+                    ext = due - emi;
+                    ext = ext < 0 ? 0 : ext;
                 }
-                tp = emi + ext;
-                dtot = Math.round(tp * 100) / 100;
             }
+
+            tp = emi + ext;
+
 
             var pri = tp - int;
             var ebal = bal - pri;
@@ -52,14 +54,14 @@
 
             content += '<tr>';
             content += '<td>' + pno++ + '</td>';
-            content += '<td>' + Math.round(bal * 100) / 100 + '</td>';
-            content += '<td>' + demi + '</td>';
-            content += '<td>' + dext + '</td>';
-            content += '<td>' + dtot + '</td>';
-            content += '<td>' + Math.round(pri * 100) / 100 + '</td>';
-            content += '<td>' + Math.round(int * 100) / 100 + '</td>';
-            content += '<td>' + Math.round(ebal * 100) / 100 + '</td>';
-            content += '<td>' + Math.round(cui * 100) / 100 + '</td>';
+            content += '<td>' + round2(bal) + '</td>';
+            content += '<td>' + round2(emi) + '</td>';
+            content += '<td>' + round2(ext) + '</td>';
+            content += '<td>' + round2(tp) + '</td>';
+            content += '<td>' + round2(pri) + '</td>';
+            content += '<td>' + round2(int) + '</td>';
+            content += '<td>' + round2(ebal) + '</td>';
+            content += '<td>' + round2(cui) + '</td>';
             content += '</tr>';
 
             bal = ebal;
@@ -68,5 +70,7 @@
         content += '</tbody>'
         return this.html(content);
     }
-}(jQuery));
+}(jQuery)
+    )
+;
 
