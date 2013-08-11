@@ -17,10 +17,10 @@
         }
 
         var emi = getEmi(o.amount, o.rate, o.tenure);
-        var ext = o.extras*1;
+        var ext = o.extras * 1;
         var tp = ext + emi;
         var rloc = o.rate / 1200;
-        var bal = o.amount*1;
+        var bal = o.amount * 1;
         var content = '<table class="amTable"><thead><th>Pmt.No.</th><th>Start Bal</th><th>Sch. Pmt</th><th>Ext. Pmt.</th><th>Tot. Pmt.</th><th>Principal</th><th>Int</th><th>End. Bal.</th><th>Cum. Int.</th></thead><tbody>';
         var pno = 1;
         var demi = Math.round(emi * 100) / 100;
@@ -28,22 +28,28 @@
         var dext = Math.round(ext * 100) / 100;
         var cui = 0;
         while (Math.round(bal) > 0) {
-            if (bal <= tp) {
-                if (bal <= emi) {
-                    emi = bal;
+            var int = bal * rloc;
+            int = int < 1 ? 0 : int;
+            var due = bal + int;
+            if (due <= tp) {
+                if (due <= emi) {
+                    emi = due;
+                    ext = 0;
                     demi = Math.round(emi * 100) / 100;
                     dext = 0;
-                    dtot = demi;
                 } else {
-                    ext = tp - emi - bal;
+                    ext = tp - emi - due;
                     dext = Math.round(ext * 100) / 100;
                     dtot = Math.round((emi + ext) * 100) / 100;
                 }
+                tp = emi + ext;
+                dtot = Math.round(tp * 100) / 100;
             }
-            var int = bal * rloc;
+
             var pri = tp - int;
             var ebal = bal - pri;
             cui += int;
+
             content += '<tr>';
             content += '<td>' + pno++ + '</td>';
             content += '<td>' + Math.round(bal * 100) / 100 + '</td>';

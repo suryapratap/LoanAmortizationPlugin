@@ -12,17 +12,17 @@
     <table id="amort" class="amTable">
         <tr>
             <td>Loan Amount</td>
-            <td><input type="text" id="amLoanAmount"></td>
+            <td><input type="text" id="amLoanAmount" value="100000"></td>
             <td>&nbsp;</td>
             <td>Loan Tenure</td>
-            <td><input type="text" id="amLoanTenure"></td>
+            <td><input type="text" id="amLoanTenure" value="24"></td>
         </tr>
         <tr>
             <td>Rate of Interest</td>
-            <td><input type="text" id="amLoanRate"></td>
+            <td><input type="text" id="amLoanRate" value="9.75"></td>
             <td>&nbsp;</td>
             <td>Extra Pmt</td>
-            <td><input type="text" id="amLoanPartial"></td>
+            <td><input type="text" id="amLoanPartial" value="0"></td>
         </tr>
     </table>
     <div id="amSchedule" style="width: 100%;">
@@ -34,7 +34,8 @@
         var rate = $("#amLoanRate").val();
         var tenure = $("#amLoanTenure").val();
         var ext = $("#amLoanPartial").val();
-        if (!(amt == '' || rate == '' || tenure == '' || ext == '')) {
+
+        if (!(isNaN(amt) || isNaN(rate) || isNaN(tenure) || isNaN(ext))) {
             $('#amSchedule').amortize({
                 amount: amt,
                 rate: rate,
@@ -47,7 +48,7 @@
     $(function () {
         showValues();
         $('#amort').change(function () {
-                   showValues();
+            showValues();
         });
     })
 </script>
