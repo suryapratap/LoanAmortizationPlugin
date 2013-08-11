@@ -1,0 +1,26 @@
+.amTable, .amTable th, .amTable td,.amTable input  {
+    margin:0;padding: 0;
+    font-family: arial,verdana,courier;
+    border-collapse: collapse;
+    border: 1px solid #000;
+    text-align: center;
+    vertical-align: middle;
+}
+
+.amTable {
+    width: 100%;
+}
+.amTable th {
+    font-weight: 900;
+    background-color: darkblue;
+    color: antiquewhite;
+}
+.amTable td {
+}
+
+.amTable input  {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    background-color: gainsboro;
+}

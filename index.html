@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <link type="text/css" rel="stylesheet" href="./css/amort.css"/>
+    <script type="text/javascript" src="./js/jquery-1.6.2.min.js"></script>
+    <script type="text/javascript" src="./js/moment.min.js"></script>
+    <script type="text/javascript" src="./js/amortisation.js"></script>
+</head>
+<body>
+<div>
+    <table id="amort" class="amTable">
+        <tr>
+            <td>Loan Amount</td>
+            <td><input type="text" id="amLoanAmount"></td>
+            <td>&nbsp;</td>
+            <td>Loan Tenure</td>
+            <td><input type="text" id="amLoanTenure"></td>
+        </tr>
+        <tr>
+            <td>Rate of Interest</td>
+            <td><input type="text" id="amLoanRate"></td>
+            <td>&nbsp;</td>
+            <td>Extra Pmt</td>
+            <td><input type="text" id="amLoanPartial"></td>
+        </tr>
+    </table>
+    <div id="amSchedule" style="width: 100%;">
+    </div>
+</div>
+<script type="text/javascript">
+    function showValues() {
+        var amt = $("#amLoanAmount").val();
+        var rate = $("#amLoanRate").val();
+        var tenure = $("#amLoanTenure").val();
+        var ext = $("#amLoanPartial").val();
+        if (!(amt == '' || rate == '' || tenure == '' || ext == '')) {
+            $('#amSchedule').amortize({
+                amount: amt,
+                rate: rate,
+                tenure: tenure,
+                extras: ext
+            });
+        }
+    }
+
+    $(function () {
+        showValues();
+        $('#amort').change(function () {
+                   showValues();
+        });
+    })
+</script>
+</body>
+</html>
